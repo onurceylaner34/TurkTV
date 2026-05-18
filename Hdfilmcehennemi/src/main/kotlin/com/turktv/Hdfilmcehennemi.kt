@@ -71,8 +71,18 @@ class Hdfilmcehennemi : MainAPI() {
     }
 
     // 4. VİDEO OYNATICILARI (LİNKLERİ) ÇEKME
-    override suspend fun loadLinks(data: String, isCasting: Boolean, callback: (ExtractorLink) -> Unit, subtitleCallback: (SubtitleFile) -> Unit): Boolean {
+    override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val document = app.get(data).document
+
+        // Sitedeki iframe (video oynatıcı) linklerini buluyoruz
+        document.select("iframe").forEach { iframe ->
+            val src = iframe.attr("src")
+            if (src.isNotBlank()) {
+                loadExtractor(fixUrl(src), data, subtitleCallback, callback)
+            }
+        }
+        return true
+    }
 
         // Sitedeki iframe (video oynatıcı) linklerini buluyoruz
         document.select("iframe").forEach { iframe ->
