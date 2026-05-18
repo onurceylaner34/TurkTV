@@ -1,0 +1,22 @@
+[
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=www.hdfilmcehennemi.nl&sz=%size%",
+        "fileHash": "sha256-c8ec74c7dc5a088a5545292140cd1f172b3cf056be2c348e4acbb9e5828cf9eb",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/onurceylaner34/TurkTv",
+        "fileSize": 9659,
+        "status": 1,
+        "language": "tr",
+        "authors": [
+            "Onur Ceylaner"
+        ],
+        "tvTypes": [
+            "Movie"
+        ],
+        "version": 1,
+        "internalName": "hdfilmcehennemi",
+        "description": "Hdfilmcehennemi \u00fczerinden kesintisiz film izleyin.",
+        "url": "https://raw.githubusercontent.com/onurceylaner34/TurkTv/builds/hdfilmcehennemi.cs3",
+        "name": "hdfilmcehennemi"
+    }
+]

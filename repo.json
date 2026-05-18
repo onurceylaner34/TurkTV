@@ -1,0 +1,8 @@
+{
+    "name": "TurkTv Cloudstream Eklenti Deposu",
+    "description": "Hdfilmcehennemi ve eklenecek diğer siteler için eklenti deposu.",
+    "manifestVersion": 1,
+    "pluginLists": [
+      "https://raw.githubusercontent.com/onurceylaner34/TurkTv/builds/plugins.json"
+    ]
+}
