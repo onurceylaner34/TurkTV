@@ -20,13 +20,10 @@ class Hdfilmcehennemi : MainAPI() {
         "${mainUrl}/kategori/komedi/" to "Komedi"
     )
 
-    // 1. ANA SAYFA VE KATEGORİLERİ ÇEKME
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        // Sayfa geçişleri için (Örn: hdfilmcehennemi.nl/film-izle/page/2/)
         val url = if (page == 1) request.data else "${request.data}page/$page/"
         val document = app.get(url).document
         
-        // Sitedeki film kartlarını yakalıyoruz (Genellikle card, poster veya article sınıfında olurlar)
         val home = document.select("div.card, div.poster, article").mapNotNull {
             it.toSearchResult()
         }
@@ -34,7 +31,6 @@ class Hdfilmcehennemi : MainAPI() {
         return newHomePageResponse(request.name, home)
     }
 
-    // 2. ARAMA YAPMA
     override suspend fun search(query: String): List<SearchResponse> {
         val document = app.get("$mainUrl/arama/$query/").document
         return document.select("div.card, div.poster, article").mapNotNull {
@@ -42,7 +38,6 @@ class Hdfilmcehennemi : MainAPI() {
         }
     }
 
-    // Film kartından verileri ayıklayan yardımcı fonksiyonumuz
     private fun Element.toSearchResult(): SearchResponse? {
         val a = this.selectFirst("a") ?: return null
         val href = fixUrl(a.attr("href"))
@@ -54,7 +49,6 @@ class Hdfilmcehennemi : MainAPI() {
         }
     }
 
-    // 3. FİLMİN DETAY SAYFASI (Afiş, Konu, Oyuncular)
     override suspend fun load(url: String): LoadResponse? {
         val document = app.get(url).document
 
@@ -70,26 +64,12 @@ class Hdfilmcehennemi : MainAPI() {
         }
     }
 
-    // 4. VİDEO OYNATICILARI (LİNKLERİ) ÇEKME
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val document = app.get(data).document
 
-        // Sitedeki iframe (video oynatıcı) linklerini buluyoruz
         document.select("iframe").forEach { iframe ->
             val src = iframe.attr("src")
             if (src.isNotBlank()) {
-                loadExtractor(fixUrl(src), data, subtitleCallback, callback)
-            }
-        }
-        return true
-    }
-
-        // Sitedeki iframe (video oynatıcı) linklerini buluyoruz
-        document.select("iframe").forEach { iframe ->
-            val src = iframe.attr("src")
-            if (src.isNotBlank()) {
-                // Şimdilik linkleri doğrudan yükleyiciye gönderiyoruz.
-                // Eğer iframe içinde m3u8 veya mp4 varsa Cloudstream otomatik algılayacaktır.
                 loadExtractor(fixUrl(src), data, subtitleCallback, callback)
             }
         }
