@@ -1,11 +1,11 @@
 package com.turktv
 
-import android.content.Context
-import com.lagradost.cloudstream3.plugins.*
+import com.lagradost.cloudstream3.plugins.BasePlugin
+import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 
 @CloudstreamPlugin
-class HdfilmcehennemiPlugin : Plugin() {
-    override fun load(context: Context) {
+class HdfilmcehennemiPlugin : BasePlugin() {
+    override fun load() {
         registerMainAPI(Hdfilmcehennemi())
     }
 }
