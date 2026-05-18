@@ -29,7 +29,7 @@ jobs:
         with:
           ref: "builds"
           path: "builds"
-      
+        
       - name: Clean old builds
         run: |
           rm $GITHUB_WORKSPACE/builds/*.cs3 || true
@@ -49,9 +49,9 @@ jobs:
           chmod +x gradlew
           ./gradlew make makePluginsJson
           ./gradlew ensureJarCompatibility
-          cp **/build/*.cs3 $GITHUB_WORKSPACE/builds
-          cp **/build/*.jar $GITHUB_WORKSPACE/builds
-          cp build/plugins.json $GITHUB_WORKSPACE/builds
+          find . -type f -name "*.cs3" -exec cp {} $GITHUB_WORKSPACE/builds/ \; || true
+          find . -type f -name "*.jar" -exec cp {} $GITHUB_WORKSPACE/builds/ \; || true
+          cp build/plugins.json $GITHUB_WORKSPACE/builds/ || true
 
       - name: Push builds
         run: |
